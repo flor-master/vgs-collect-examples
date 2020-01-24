@@ -18,24 +18,24 @@ Here we've collected examples of library use cases:
 
 ### 1. Capturing credit card data
 
-[Code example is here](examples/credit-card-example)
+[Ready to go example](examples/credit-card-example)
 
-[GitHub Pages example](https://verygoodsecurity.github.io/vgs-collect-examples/#credit-card-example)
+[Live demo](https://verygoodsecurity.github.io/vgs-collect-examples/#credit-card-example)
 
 ### 2. Capturing shipping info along with billing
 
-[Code example is here](examples/shipping-info-example)
+[Ready to go example](examples/shipping-info-example)
 
-[GitHub Pages example](https://verygoodsecurity.github.io/vgs-collect-examples/#shipping-info-example)
+[Live demo](https://verygoodsecurity.github.io/vgs-collect-examples/#shipping-info-example)
 
 ### 3. Capturing personal (log in) data (username & password/ email & password)
 
-[Code example is here](examples/login-data-example)
+[Ready to go example](examples/login-data-example)
 
-[GitHub Pages example](https://verygoodsecurity.github.io/vgs-collect-examples/#login-data-example)
+[Live demo](https://verygoodsecurity.github.io/vgs-collect-examples/#login-data-example)
 
 ### 4. Capturing PII for background checks (driver licenses, social security cards, passports)  
  
-[Code example is here](examples/pii-example)
+[Ready to go example](examples/pii-example)
 
-[GitHub Pages example](https://verygoodsecurity.github.io/vgs-collect-examples/#pii-example)
+[Live demo](https://verygoodsecurity.github.io/vgs-collect-examples/#pii-example)
