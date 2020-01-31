@@ -119,14 +119,15 @@
     </div>
     <div class="col-md-4">
       <div class="alert alert-secondary">
-        <h5 class="text-center">Instruction</h5>
-        <p>1. Make sure you initialize form using the right environment param.</p>
-        <p>2. For create connection via VGS, try to use Start Integration Wazzard on the 
+        <h5 class="text-center">Quick Start</h5>
+        <p>1. Initalize the form by setting <b>vaultId</b> and <b>environment</b> variables.</p>
+        <p>2. Establish an inbound connection with VGS, by clicking <br /> <b>Start Integration</b> -> <b>Wizard</b> on the 
           <a href="https://dashboard-canary.verygoodsecurity.com" target='_blank'>Dashboard</a>.</p>
         <p>3. Fill in and submit the form.</p>
-        <p>4. Return to the Wazzard, find your POST request and secure fields that you want to be redacted.</p>
-        <p>5. Submit form one more time.</p>
+        <p>4. Return to the Wizard, find your POST request and secure fields that you want to be redacted.</p>
+        <p>5. Submit form one more time and you'll see aliases in the response.</p>
       </div>
+      
       <div class="alert alert-warning">
         <h5 class="text-center">Response</h5>
         <div id="result">
@@ -143,16 +144,8 @@
   var vaultId = '';
   var environment = '';
   
-    // VGS Collect form initialization
-  try {
-    var form = VGSCollect.create(vaultId, environment, function(state) {});  
-  } catch(e) {
-    const initError = 'Make sure that you have correct initial params in <b>VGSCollect.create()</b> method. <br/>' 
-    + 'Correct initial parameters you can find in '
-    + '<a href="https://dashboard-canary.verygoodsecurity.com" target="_blank">Dashboard</a>, VGS Collect page <br>'
-    + '<p class="example">Initial example: <span>VGSCollect.create("< vaultId >", "< sandbox | live >", function(state) {});</span></p>';
-    document.getElementById('result').innerHTML = initError;
-  }
+  // VGS Collect form initialization
+  var form = VGSCollect.create(vaultId, environment, function(state) {});
   
   // Create VGS Collect field for credit card name
   form.field('#cc-name', {
@@ -203,7 +196,7 @@
         + "<a href='https://dashboard-canary.verygoodsecurity.com' target='_blank'>Start Integration Wizzard</a> in Dashboard";
         document.getElementById('result').innerHTML = text;
       }
-    }, 3000);
+    }, 2500);
 
   });
     
