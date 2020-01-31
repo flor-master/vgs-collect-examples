@@ -160,7 +160,6 @@
     name: 'card_name',
     placeholder: 'Joe Business',
     validations: ['required'],
-    defaultValue: 'qq',
   });
 
   // Create VGS Collect field for credit card number
@@ -171,7 +170,6 @@
     errorColor: '#D8000C',
     placeholder: '4111 1111 1111 1111',
     validations: ['required', 'validCardNumber'],
-    defaultValue: '4111111111111111',
   });
 
   // Create VGS Collect field for CVC
@@ -180,7 +178,6 @@
     name: 'card_cvc',
     placeholder: '344',
     validations: ['required', 'validCardSecurityCode'],
-    defaultValue: '123',
   });
 
   // Create VGS Collect field for credit card expiration date
@@ -189,7 +186,6 @@
     name: 'card_expirationDate',
     placeholder: '01 / 2022',
     validations: ['required', 'validCardExpirationDate'],
-    defaultValue: '01 / 2022',
   });
 
   // Submits all of the form fields by executing a POST request.
