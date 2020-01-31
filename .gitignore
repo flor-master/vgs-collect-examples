@@ -2,3 +2,6 @@
 .DS_Store
 
 node_modules
+./examples/login-data-example/*
+./examples/pii-example/*
+./examples/shipping-info-example/*

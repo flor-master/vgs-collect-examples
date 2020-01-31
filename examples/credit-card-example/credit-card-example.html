@@ -25,8 +25,10 @@
       width: 100%;
     }
 
-    pre {
-      font-size: 12px;
+    #result {
+      display: block;
+      font-size: 87.5%;
+      color: #212529;
     }
 
     .form-field {
@@ -53,6 +55,21 @@
 
     p {
       margin-bottom: 10px;
+    }
+    .example {
+      padding-top: 20px;
+      font-size: 14px;
+      opacity: 0.87;
+    }
+    .example span {
+      opacity: 1;
+      border: solid 1px;
+      display: block;
+      border-radius:4px;
+      padding: 8px;
+      margin-top: 10px;
+      border-color: #bda760;
+      color: #352f1a;
     }
   </style>
 </head>
@@ -82,15 +99,15 @@
               </span>
             </div>
             <div class="form-group">
-              <label for="cc-cvc">CVC</label>
-              <span id="cc-cvc" class="form-field">
-              <!--VGS Collect iframe for CVC field will be here!-->
-              </span>
-            </div>
-            <div class="form-group">
               <label for="cc-expiration-date">Expiration date</label>
               <span id="cc-expiration-date" class="form-field">
               <!--VGS Collect iframe for expiration date field will be here!-->
+              </span>
+            </div>
+            <div class="form-group">
+              <label for="cc-cvc">CVC</label>
+              <span id="cc-cvc" class="form-field">
+              <!--VGS Collect iframe for CVC field will be here!-->
               </span>
             </div>
 
@@ -103,18 +120,18 @@
     <div class="col-md-4">
       <div class="alert alert-secondary">
         <h5 class="text-center">Instruction</h5>
-        <p>1. Go back to the VGS Collect tab on a Dashboard and change the library file to your own.</p>
-        <p>2. Make sure you initialize form using right environment param.</p>
-        <p>3. Create an inbound route, proceed to Logs on a Dashboard and start recording traffic.</p>
-        <p>4. Fill in and submit the form.</p>
-        <p>5. Open Logs, find your POST request and secure fields that you want to be redacted.</p>
-        <p>6. Submit form one more time.</p>
+        <p>1. Make sure you initialize form using the right environment param.</p>
+        <p>2. For create connection via VGS, try to use Start Integration Wazzard on the 
+          <a href="https://dashboard-canary.verygoodsecurity.com" target='_blank'>Dashboard</a>.</p>
+        <p>3. Fill in and submit the form.</p>
+        <p>4. Return to the Wazzard, find your POST request and secure fields that you want to be redacted.</p>
+        <p>5. Submit form one more time.</p>
       </div>
       <div class="alert alert-warning">
         <h5 class="text-center">Response</h5>
-        <pre id="result">
+        <div id="result">
           Submit a form to see result.
-        </pre>
+        </div>
       </div>
     </div>
   </div>
@@ -123,17 +140,27 @@
 <!--Include script with VGS Collect form initialization-->
 <script>
   // Setup vault_id and envviroment
-  var vaultId = '<vault-id>';
-  var environment = '<sandbox | live>';
-  // VGS Collect form initialization
-  var form = VGSCollect.create(vaultId, environment, function(state) {});
-
+  var vaultId = 'tntstwggghg';
+  var environment = 'sandbox';
+  
+    // VGS Collect form initialization
+  try {
+    var form = VGSCollect.create(vaultId, environment, function(state) {});  
+  } catch(e) {
+    const initError = 'Make sure that you have correct initial params in <b>VGSCollect.create()</b> method. <br/>' 
+    + 'Correct initial parameters you can find in '
+    + '<a href="https://dashboard-canary.verygoodsecurity.com" target="_blank">Dashboard</a>, VGS Collect page <br>'
+    + '<p class="example">Initial example: <span>VGSCollect.create("< vaultId >", "< sandbox | live >", function(state) {});</span></p>';
+    document.getElementById('result').innerHTML = initError;
+  }
+  
   // Create VGS Collect field for credit card name
   form.field('#cc-name', {
     type: 'text',
     name: 'card_name',
     placeholder: 'Joe Business',
     validations: ['required'],
+    defaultValue: 'qq',
   });
 
   // Create VGS Collect field for credit card number
@@ -144,6 +171,7 @@
     errorColor: '#D8000C',
     placeholder: '4111 1111 1111 1111',
     validations: ['required', 'validCardNumber'],
+    defaultValue: '4111111111111111',
   });
 
   // Create VGS Collect field for CVC
@@ -152,6 +180,7 @@
     name: 'card_cvc',
     placeholder: '344',
     validations: ['required', 'validCardSecurityCode'],
+    defaultValue: '123',
   });
 
   // Create VGS Collect field for credit card expiration date
@@ -159,20 +188,29 @@
     type: 'card-expiration-date',
     name: 'card_expirationDate',
     placeholder: '01 / 2022',
-    validations: ['required', 'validCardExpirationDate']
+    validations: ['required', 'validCardExpirationDate'],
+    defaultValue: '01 / 2022',
   });
 
   // Submits all of the form fields by executing a POST request.
-  document.getElementById('cc-form')
-    .addEventListener('submit', function(e) {
-      e.preventDefault();
-      form.submit('/post', {
-      }, function(status, data) {
-        document.getElementById('result').innerHTML = JSON.stringify(data.json, null, 4);
-      });
-    }, function (errors) {
+  document.getElementById('cc-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    form.submit('/post', {}, function(status, data) {
+      document.getElementById('result').innerHTML = "<pre>"+JSON.stringify(data.json, null, 4)+"</pre>";
+    }, function(error) {
       document.getElementById('result').innerHTML = errors;
     });
+    
+    setTimeout(function () {
+      if (document.getElementById('result').innerHTML.indexOf('Submit a form to see result.') > -1) {
+        const text = "Looks like you didn't set up the Inbound route. Please try "
+        + "<a href='https://dashboard-canary.verygoodsecurity.com' target='_blank'>Start Integration Wizzard</a> in Dashboard";
+        document.getElementById('result').innerHTML = text;
+      }
+    }, 1000);
+
+  });
+    
 </script>
 </body>
 </html>
